@@ -1,12 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
   name: webserver
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: webserver
+    app: webserver
   template:
     metadata:
       name: webserver

@@ -1,28 +1,35 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: worker1
+  name: worker2
 spec:
   replicas: 1
   selector:
     app: worker
-    worker: w1
+    worker: w2
   template:
     metadata:
-      name: worker1
+      name: worker2
       labels:
         app: worker
-        worker: w1
+        worker: w2
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: worker
+                operator: In
+                values:
+                - w1
+            topologyKey: kubernetes.io/hostname
       containers:
-      - name: w1
-        image: endianogino/netperf:{{ .Values.images.workerVersion }}
+      - name: w2
+        image: {{ .Values.images.tags.worker }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         args:
         - --mode=worker
-    {{- if .Values.debug.worker }}
-        - -debug
-    {{- end}}
         ports:
         - name: iperf3-port
           protocol: UDP
@@ -32,7 +39,7 @@ spec:
           containerPort: 12865
         env:
         - name: workerName
-          value: "netperf-w1"
+          value: "netperf-w2"
         - name: workerPodIP
           valueFrom:
             fieldRef:

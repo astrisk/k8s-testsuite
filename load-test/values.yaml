@@ -1,9 +1,9 @@
 imagePullPolicy: IfNotPresent
 images:
-  loadbotVersion: "1.0"
-  webserverVersion: "1.0"
-  aggregatorVersion: "1.0"
-
+  tags:
+    webserver: endianogino/simple-webserver:1.0
+    aggregator: endianogino/aggregator:1.0
+    loadbot: endianogino/vegeta-server:1.0
 cpuRequests:
   loadbot: "100m"
   webserver: "100m"
@@ -20,3 +20,6 @@ loadbot:
   rate: 1000
   workers: 10
   duration: 1s
+
+
+

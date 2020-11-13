@@ -5,8 +5,9 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: worker
-    worker: w1
+    matchLabels:
+      app:  worker
+      worker: w1
   template:
     metadata:
       name: worker1

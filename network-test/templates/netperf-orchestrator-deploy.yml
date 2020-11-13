@@ -5,7 +5,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-    app: orchestrator
+    matchLabels:
+      app: orchestrator    
   template:
     metadata:
       name: orchestrator
